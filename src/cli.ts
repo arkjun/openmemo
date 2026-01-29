@@ -193,17 +193,17 @@ function buildMatcher(pattern: string): RegExp | null {
 function printHelp(): void {
   console.log(
     [
-      "open-memo - OpenTUI-based memo app",
+      "openmemo - OpenTUI-based memo app",
       "",
       "Usage:",
-      "  open-memo               Launch TUI",
-      "  open-memo new           Create memo",
-      "  open-memo list          List memos",
-      "  open-memo edit <query>  Edit memo",
-      "  open-memo delete <query> Delete memo",
-      "  open-memo grep <pattern> Search memo contents",
-      "  open-memo cat <query>   View memo",
-      "  open-memo help          Show help",
+      "  openmemo               Launch TUI",
+      "  openmemo new           Create memo",
+      "  openmemo list          List memos",
+      "  openmemo edit <query>  Edit memo",
+      "  openmemo delete <query> Delete memo",
+      "  openmemo grep <pattern> Search memo contents",
+      "  openmemo cat <query>   View memo",
+      "  openmemo help          Show help",
       "",
     ].join("\n"),
   )

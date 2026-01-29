@@ -6,7 +6,7 @@ export function getMemoDir(): string {
   if (fromEnv && fromEnv.trim() !== "") {
     return fromEnv
   }
-  return path.join(os.homedir(), ".open-memo", "memos")
+  return path.join(os.homedir(), ".openmemo", "memos")
 }
 
 export function getEditorCommand(): string {

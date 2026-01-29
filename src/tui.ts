@@ -12,7 +12,7 @@ import { openEditor } from "./editor.js"
 import { listMemos, type MemoRecord } from "./storage.js"
 import { truncateLines } from "./utils.js"
 
-const EMPTY_MESSAGE = "No memos yet. Run open-memo new to create one."
+const EMPTY_MESSAGE = "No memos yet. Run openmemo new to create one."
 
 export async function runTui(): Promise<void> {
   const memos = await listMemos()
@@ -24,7 +24,7 @@ export async function runTui(): Promise<void> {
   renderer.setBackgroundColor("#0f172a")
 
   const container = new BoxRenderable(renderer, {
-    id: "open-memo-container",
+    id: "openmemo-container",
     flexDirection: "row",
     width: "100%",
     height: "100%",
@@ -33,7 +33,7 @@ export async function runTui(): Promise<void> {
   renderer.root.add(container)
 
   const listBox = new BoxRenderable(renderer, {
-    id: "open-memo-list",
+    id: "openmemo-list",
     flexGrow: 1,
     marginRight: 1,
     border: true,
@@ -46,7 +46,7 @@ export async function runTui(): Promise<void> {
   })
 
   const previewBox = new BoxRenderable(renderer, {
-    id: "open-memo-preview",
+    id: "openmemo-preview",
     flexGrow: 2,
     border: true,
     borderStyle: "single",
@@ -61,7 +61,7 @@ export async function runTui(): Promise<void> {
   container.add(previewBox)
 
   const previewText = new TextRenderable(renderer, {
-    id: "open-memo-preview-text",
+    id: "openmemo-preview-text",
     width: "100%",
     height: "100%",
     fg: "#e2e8f0",
@@ -82,7 +82,7 @@ export async function runTui(): Promise<void> {
   }))
 
   const selectElement = new SelectRenderable(renderer, {
-    id: "open-memo-select",
+    id: "openmemo-select",
     height: "100%",
     options,
     backgroundColor: "transparent",
