@@ -1,0 +1,20 @@
+{
+  "name": "open-memo",
+  "version": "0.1.0",
+  "description": "OpenTUI-based memo app inspired by mattn/memo",
+  "type": "module",
+  "bin": {
+    "open-memo": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@opentui/core": "^0.1.75"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.5"
+  }
+}
