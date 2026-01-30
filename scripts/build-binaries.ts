@@ -4,7 +4,6 @@ import { join } from "path";
 
 const allTargets = [
   { target: "bun-darwin-arm64", pkg: "openmemo-darwin-arm64", ext: "" },
-  { target: "bun-darwin-x64", pkg: "openmemo-darwin-x64", ext: "" },
   { target: "bun-linux-x64", pkg: "openmemo-linux-x64", ext: "" },
   { target: "bun-linux-arm64", pkg: "openmemo-linux-arm64", ext: "" },
   { target: "bun-windows-x64", pkg: "openmemo-windows-x64", ext: ".exe" },

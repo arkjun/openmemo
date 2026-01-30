@@ -45,9 +45,12 @@ Environment variables:
 
 ## Supported Platforms
 
-- macOS (Apple Silicon & Intel)
+- macOS Apple Silicon (ARM64)
+- macOS Intel (x64) - via Rosetta 2
 - Linux (x64 & ARM64)
 - Windows (x64)
+
+> **Note:** macOS Intel users can run the ARM64 binary via Rosetta 2, which is automatically used by macOS.
 
 ## Links
 

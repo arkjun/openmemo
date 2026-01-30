@@ -17,19 +17,12 @@ jobs:
         include:
           - os: macos-14
             target: darwin-arm64
-            test: true
-          - os: macos-14
-            target: darwin-x64
-            test: false  # Cross-compiled, can't test on ARM64 runner
           - os: ubuntu-latest
             target: linux-x64
-            test: true
           - os: ubuntu-24.04-arm
             target: linux-arm64
-            test: true
           - os: windows-latest
             target: windows-x64
-            test: true
 
     steps:
       - uses: actions/checkout@v4
@@ -46,11 +39,11 @@ jobs:
         run: bun run scripts/build-binaries.ts --target ${{ matrix.target }}
 
       - name: Test binary (Unix)
-        if: matrix.test && runner.os != 'Windows'
+        if: runner.os != 'Windows'
         run: ./packages/openmemo-${{ matrix.target }}/openmemo help
 
       - name: Test binary (Windows)
-        if: matrix.test && runner.os == 'Windows'
+        if: runner.os == 'Windows'
         run: ./packages/openmemo-${{ matrix.target }}/openmemo.exe help
 
       - name: Upload artifact
@@ -84,7 +77,7 @@ jobs:
 
       - name: Copy binaries to packages
         run: |
-          for target in darwin-arm64 darwin-x64 linux-x64 linux-arm64 windows-x64; do
+          for target in darwin-arm64 linux-x64 linux-arm64 windows-x64; do
             mkdir -p packages/openmemo-$target
             cp artifacts/openmemo-$target/* packages/openmemo-$target/
             chmod +x packages/openmemo-$target/openmemo* 2>/dev/null || true
@@ -106,7 +99,6 @@ jobs:
             const pkg = require('./package.json');
             pkg.optionalDependencies = {
               'openmemo-darwin-arm64': '$VERSION',
-              'openmemo-darwin-x64': '$VERSION',
               'openmemo-linux-x64': '$VERSION',
               'openmemo-linux-arm64': '$VERSION',
               'openmemo-windows-x64': '$VERSION'
@@ -116,7 +108,7 @@ jobs:
           cd ../..
 
           # Update platform packages
-          for target in darwin-arm64 darwin-x64 linux-x64 linux-arm64 windows-x64; do
+          for target in darwin-arm64 linux-x64 linux-arm64 windows-x64; do
             cd packages/openmemo-$target
             npm version $VERSION --no-git-tag-version --allow-same-version
             cd ../..
@@ -126,7 +118,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          for target in darwin-arm64 darwin-x64 linux-x64 linux-arm64 windows-x64; do
+          for target in darwin-arm64 linux-x64 linux-arm64 windows-x64; do
             echo "Publishing openmemo-$target..."
             cd packages/openmemo-$target
             npm publish --access public || true
@@ -145,7 +137,6 @@ jobs:
         with:
           files: |
             artifacts/openmemo-darwin-arm64/*
-            artifacts/openmemo-darwin-x64/*
             artifacts/openmemo-linux-x64/*
             artifacts/openmemo-linux-arm64/*
             artifacts/openmemo-windows-x64/*
