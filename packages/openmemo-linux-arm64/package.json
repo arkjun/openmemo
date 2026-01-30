@@ -4,7 +4,7 @@
   "description": "openmemo binary for Linux ARM64",
   "os": ["linux"],
   "cpu": ["arm64"],
-  "files": ["openmemo"],
+  "files": ["openmemo-linux-arm64"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arkjun/openmemo.git"
