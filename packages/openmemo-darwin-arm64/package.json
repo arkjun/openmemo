@@ -4,7 +4,7 @@
   "description": "openmemo binary for macOS ARM64 (Apple Silicon)",
   "os": ["darwin"],
   "cpu": ["arm64"],
-  "files": ["openmemo"],
+  "files": ["openmemo-darwin-arm64"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arkjun/openmemo.git"
