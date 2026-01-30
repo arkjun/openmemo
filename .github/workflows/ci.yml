@@ -37,14 +37,19 @@ jobs:
         include:
           - os: macos-14
             target: darwin-arm64
-          - os: macos-15
+            test: true
+          - os: macos-14
             target: darwin-x64
+            test: false  # Cross-compiled, can't test on ARM64 runner
           - os: ubuntu-latest
             target: linux-x64
+            test: true
           - os: ubuntu-24.04-arm
             target: linux-arm64
+            test: true
           - os: windows-latest
             target: windows-x64
+            test: true
 
     steps:
       - uses: actions/checkout@v4
@@ -58,14 +63,14 @@ jobs:
         run: bun install
 
       - name: Build binary
-        run: bun run scripts/build-binaries.ts --current
+        run: bun run scripts/build-binaries.ts --target ${{ matrix.target }}
 
       - name: Test binary (Unix)
-        if: runner.os != 'Windows'
+        if: matrix.test && runner.os != 'Windows'
         run: ./packages/openmemo-${{ matrix.target }}/openmemo help
 
       - name: Test binary (Windows)
-        if: runner.os == 'Windows'
+        if: matrix.test && runner.os == 'Windows'
         run: ./packages/openmemo-${{ matrix.target }}/openmemo.exe help
 
       - name: Upload artifact
