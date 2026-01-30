@@ -32,5 +32,11 @@
   },
   "scripts": {
     "postinstall": "node bin/postinstall.mjs"
+  },
+  "optionalDependencies": {
+    "openmemo-darwin-arm64": "0.1.0",
+    "openmemo-linux-x64": "0.1.0",
+    "openmemo-linux-arm64": "0.1.0",
+    "openmemo-windows-x64": "0.1.0"
   }
 }
