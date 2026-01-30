@@ -5,6 +5,12 @@ import { fileURLToPath } from "url"
 import { createRequire } from "module"
 import https from "https"
 
+// Skip during CI builds
+if (process.env.CI) {
+  console.log("[openmemo] Skipping binary download in CI environment")
+  process.exit(0)
+}
+
 const require = createRequire(import.meta.url)
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const pkg = require("../package.json")
