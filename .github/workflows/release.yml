@@ -93,16 +93,19 @@ jobs:
         run: |
           VERSION=${{ steps.version.outputs.version }}
 
-          # Update main package
+          # Update main package and add optionalDependencies
           cd packages/openmemo
           npm version $VERSION --no-git-tag-version --allow-same-version
 
-          # Update optional dependencies versions
           node -e "
             const pkg = require('./package.json');
-            for (const dep of Object.keys(pkg.optionalDependencies || {})) {
-              pkg.optionalDependencies[dep] = '$VERSION';
-            }
+            pkg.optionalDependencies = {
+              'openmemo-darwin-arm64': '$VERSION',
+              'openmemo-darwin-x64': '$VERSION',
+              'openmemo-linux-x64': '$VERSION',
+              'openmemo-linux-arm64': '$VERSION',
+              'openmemo-windows-x64': '$VERSION'
+            };
             require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
           "
           cd ../..
