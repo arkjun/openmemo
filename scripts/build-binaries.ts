@@ -79,7 +79,8 @@ for (const { target, pkg, ext } of buildTargets) {
     if (error instanceof Error) {
       const stderr = (error as any).stderr;
       if (stderr) {
-        const errorLine = stderr.split("\n").find((line: string) => line.includes("error:"));
+        const stderrStr = typeof stderr === "string" ? stderr : stderr.toString();
+        const errorLine = stderrStr.split("\n").find((line: string) => line.includes("error:"));
         if (errorLine) {
           console.error(`    ${errorLine.trim()}\n`);
         }
