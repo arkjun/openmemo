@@ -12,6 +12,9 @@ importers:
         specifier: ^0.1.75
         version: 0.1.75(stage-js@1.0.0-alpha.17)(typescript@5.9.3)(web-tree-sitter@0.25.10)
     devDependencies:
+      '@types/bun':
+        specifier: latest
+        version: 1.3.8
       '@types/node':
         specifier: ^20.11.30
         version: 20.19.30
@@ -24,6 +27,18 @@ importers:
       vitest:
         specifier: ^4.0.18
         version: 4.0.18(@types/node@20.19.30)
+
+  packages/openmemo: {}
+
+  packages/openmemo-darwin-arm64: {}
+
+  packages/openmemo-darwin-x64: {}
+
+  packages/openmemo-linux-arm64: {}
+
+  packages/openmemo-linux-x64: {}
+
+  packages/openmemo-windows-x64: {}
 
 packages:
 
@@ -508,6 +523,9 @@ packages:
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
 
+  '@types/bun@1.3.8':
+    resolution: {integrity: sha512-3LvWJ2q5GerAXYxO2mffLTqOzEu5qnhEAlh48Vnu8WQfnmSwbgagjGZV6BoHKJztENYEDn6QmVd949W4uESRJA==}
+
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
 
@@ -595,6 +613,9 @@ packages:
     resolution: {integrity: sha512-Lh1oQAYHDcnesJauieA4UNkWGXY9hYck7OA5IaRwE3Bp6K2F2pJSNYqq+hIy7P3uOvo3km3oxS8304g5gDMl/w==}
     peerDependencies:
       typescript: ^5
+
+  bun-types@1.3.8:
+    resolution: {integrity: sha512-fL99nxdOWvV4LqjmC+8Q9kW3M4QTtTR1eePs94v5ctGqU8OeceWrSUaRw3JYb7tU3FkMIAjkueehrHPPPGKi5Q==}
 
   bun-webgpu-darwin-arm64@0.1.4:
     resolution: {integrity: sha512-eDgLN9teKTfmvrCqgwwmWNsNszxYs7IZdCqk0S1DCarvMhr4wcajoSBlA/nQA0/owwLduPTS8xxCnQp4/N/gDg==}
@@ -1405,6 +1426,10 @@ snapshots:
 
   '@tokenizer/token@0.3.0': {}
 
+  '@types/bun@1.3.8':
+    dependencies:
+      bun-types: 1.3.8
+
   '@types/chai@5.2.3':
     dependencies:
       '@types/deep-eql': 4.0.2
@@ -1504,6 +1529,10 @@ snapshots:
   bun-ffi-structs@0.1.2(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
+
+  bun-types@1.3.8:
+    dependencies:
+      '@types/node': 20.19.30
 
   bun-webgpu-darwin-arm64@0.1.4:
     optional: true
