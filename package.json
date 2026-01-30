@@ -6,13 +6,38 @@
   "bin": {
     "openmemo": "dist/cli.js"
   },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arkjun/openmemo.git"
+  },
+  "author": "arkjun",
+  "license": "MIT",
+  "keywords": [
+    "memo",
+    "cli",
+    "terminal",
+    "tui",
+    "note",
+    "markdown"
+  ],
+  "homepage": "https://github.com/arkjun/openmemo#readme",
+  "bugs": {
+    "url": "https://github.com/arkjun/openmemo/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "bun dist/cli.js",
     "test": "vitest",
     "test:run": "vitest run",
     "test:watch": "vitest watch",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run build && npm run test:run"
   },
   "dependencies": {
     "@opentui/core": "^0.1.75"
