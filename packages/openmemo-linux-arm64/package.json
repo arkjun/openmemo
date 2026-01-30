@@ -1,6 +1,6 @@
 {
   "name": "openmemo-linux-arm64",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "description": "openmemo binary for Linux ARM64",
   "os": ["linux"],
   "cpu": ["arm64"],
