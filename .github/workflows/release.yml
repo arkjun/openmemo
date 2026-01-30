@@ -40,11 +40,11 @@ jobs:
 
       - name: Test binary (Unix)
         if: runner.os != 'Windows'
-        run: ./packages/openmemo-${{ matrix.target }}/openmemo help
+        run: ./packages/openmemo-${{ matrix.target }}/openmemo-${{ matrix.target }} help
 
       - name: Test binary (Windows)
         if: runner.os == 'Windows'
-        run: ./packages/openmemo-${{ matrix.target }}/openmemo.exe help
+        run: ./packages/openmemo-${{ matrix.target }}/openmemo-${{ matrix.target }}.exe help
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

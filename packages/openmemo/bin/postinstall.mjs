@@ -28,9 +28,9 @@ const pkgName = `openmemo-${os}-${cpu}`;
 const ext = os === "windows" ? ".exe" : "";
 
 // Check global install path (sibling package)
-const globalPath = join(__dirname, "..", "..", pkgName, `openmemo${ext}`);
+const globalPath = join(__dirname, "..", "..", pkgName, `openmemo-${os}-${cpu}${ext}`);
 // Check local install path
-const localPath = join(__dirname, "..", "node_modules", pkgName, `openmemo${ext}`);
+const localPath = join(__dirname, "..", "node_modules", pkgName, `openmemo-${os}-${cpu}${ext}`);
 
 if (existsSync(globalPath) || existsSync(localPath)) {
   console.log(`[openmemo] Binary found for ${os}-${cpu}`);

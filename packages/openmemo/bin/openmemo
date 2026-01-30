@@ -25,14 +25,14 @@ BIN_PKG="openmemo-${PLATFORM}"
 
 # Try to find the binary in node_modules (global install structure)
 # Path 1: Global install - binary package is a sibling in node_modules
-GLOBAL_BIN="$PKG_DIR/../$BIN_PKG/openmemo"
+GLOBAL_BIN="$PKG_DIR/../$BIN_PKG/openmemo-${PLATFORM}"
 
 # Path 2: Local install - binary package is in package's node_modules
-LOCAL_BIN="$PKG_DIR/node_modules/$BIN_PKG/openmemo"
+LOCAL_BIN="$PKG_DIR/node_modules/$BIN_PKG/openmemo-${PLATFORM}"
 
 # Windows executable paths
-GLOBAL_BIN_EXE="$PKG_DIR/../$BIN_PKG/openmemo.exe"
-LOCAL_BIN_EXE="$PKG_DIR/node_modules/$BIN_PKG/openmemo.exe"
+GLOBAL_BIN_EXE="$PKG_DIR/../$BIN_PKG/openmemo-${PLATFORM}.exe"
+LOCAL_BIN_EXE="$PKG_DIR/node_modules/$BIN_PKG/openmemo-${PLATFORM}.exe"
 
 # Try each path
 if [ -x "$GLOBAL_BIN" ]; then

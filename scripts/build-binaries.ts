@@ -63,7 +63,8 @@ let failCount = 0;
 
 for (const { target, pkg, ext } of buildTargets) {
   const outDir = join("packages", pkg);
-  const outFile = join(outDir, `openmemo${ext}`);
+  const shortTarget = pkg.replace("openmemo-", "");
+  const outFile = join(outDir, `openmemo-${shortTarget}${ext}`);
 
   console.log(`Building ${target}...`);
 
