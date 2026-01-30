@@ -1,6 +1,6 @@
 {
   "name": "openmemo",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "OpenTUI-based memo app inspired by mattn/memo",
   "bin": {
     "openmemo": "bin/openmemo"
@@ -32,11 +32,5 @@
   },
   "scripts": {
     "postinstall": "node bin/postinstall.mjs"
-  },
-  "optionalDependencies": {
-    "openmemo-darwin-arm64": "workspace:*",
-    "openmemo-linux-x64": "workspace:*",
-    "openmemo-linux-arm64": "workspace:*",
-    "openmemo-windows-x64": "workspace:*"
   }
 }

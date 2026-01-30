@@ -59,11 +59,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -75,55 +70,15 @@ jobs:
         with:
           path: artifacts
 
-      - name: Copy binaries to packages
-        run: |
-          for target in darwin-arm64 linux-x64 linux-arm64 windows-x64; do
-            mkdir -p packages/openmemo-$target
-            cp artifacts/openmemo-$target/* packages/openmemo-$target/
-            chmod +x packages/openmemo-$target/openmemo* 2>/dev/null || true
-          done
-
       - name: Get version from tag
         id: version
         run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
-      - name: Update package versions
+      - name: Update package version
         run: |
           VERSION=${{ steps.version.outputs.version }}
-
-          # Update main package and add optionalDependencies
           cd packages/openmemo
           npm version $VERSION --no-git-tag-version --allow-same-version
-
-          node -e "
-            const pkg = require('./package.json');
-            pkg.optionalDependencies = {
-              'openmemo-darwin-arm64': '$VERSION',
-              'openmemo-linux-x64': '$VERSION',
-              'openmemo-linux-arm64': '$VERSION',
-              'openmemo-windows-x64': '$VERSION'
-            };
-            require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
-          "
-          cd ../..
-
-          # Update platform packages
-          for target in darwin-arm64 linux-x64 linux-arm64 windows-x64; do
-            cd packages/openmemo-$target
-            npm version $VERSION --no-git-tag-version --allow-same-version
-            cd ../..
-          done
-
-      - name: Publish platform packages
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          for target in darwin-arm64 linux-x64 linux-arm64 windows-x64; do
-            echo "Publishing openmemo-$target..."
-            cd packages/openmemo-$target
-            npm publish --access public || true
-            cd ../..
-          done
 
       - name: Publish main package
         env:

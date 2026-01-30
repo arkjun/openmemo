@@ -28,20 +28,7 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(@types/node@20.19.30)
 
-  packages/openmemo:
-    optionalDependencies:
-      openmemo-darwin-arm64:
-        specifier: workspace:*
-        version: link:../openmemo-darwin-arm64
-      openmemo-linux-arm64:
-        specifier: workspace:*
-        version: link:../openmemo-linux-arm64
-      openmemo-linux-x64:
-        specifier: workspace:*
-        version: link:../openmemo-linux-x64
-      openmemo-windows-x64:
-        specifier: workspace:*
-        version: link:../openmemo-windows-x64
+  packages/openmemo: {}
 
   packages/openmemo-darwin-arm64: {}
 

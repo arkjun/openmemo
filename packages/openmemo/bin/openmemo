@@ -1,11 +1,8 @@
 #!/bin/sh
 set -e
 
-# Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PKG_DIR="$(dirname "$SCRIPT_DIR")"
 
-# Detect platform
 OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
 ARCH="$(uname -m)"
 
@@ -20,36 +17,15 @@ case "$ARCH" in
   arm64|aarch64) ARCH="arm64" ;;
 esac
 
-PLATFORM="${OS}-${ARCH}"
-BIN_PKG="openmemo-${PLATFORM}"
+BIN_NAME="openmemo-${OS}-${ARCH}"
+[ "$OS" = "windows" ] && BIN_NAME="${BIN_NAME}.exe"
 
-# Try to find the binary in node_modules (global install structure)
-# Path 1: Global install - binary package is a sibling in node_modules
-GLOBAL_BIN="$PKG_DIR/../$BIN_PKG/openmemo-${PLATFORM}"
+BIN_PATH="$SCRIPT_DIR/$BIN_NAME"
 
-# Path 2: Local install - binary package is in package's node_modules
-LOCAL_BIN="$PKG_DIR/node_modules/$BIN_PKG/openmemo-${PLATFORM}"
-
-# Windows executable paths
-GLOBAL_BIN_EXE="$PKG_DIR/../$BIN_PKG/openmemo-${PLATFORM}.exe"
-LOCAL_BIN_EXE="$PKG_DIR/node_modules/$BIN_PKG/openmemo-${PLATFORM}.exe"
-
-# Try each path
-if [ -x "$GLOBAL_BIN" ]; then
-  exec "$GLOBAL_BIN" "$@"
-elif [ -x "$LOCAL_BIN" ]; then
-  exec "$LOCAL_BIN" "$@"
-elif [ -x "$GLOBAL_BIN_EXE" ]; then
-  exec "$GLOBAL_BIN_EXE" "$@"
-elif [ -x "$LOCAL_BIN_EXE" ]; then
-  exec "$LOCAL_BIN_EXE" "$@"
+if [ -x "$BIN_PATH" ]; then
+  exec "$BIN_PATH" "$@"
 else
-  echo "Error: Could not find openmemo binary for platform $PLATFORM"
-  echo ""
-  echo "Searched paths:"
-  echo "  - $GLOBAL_BIN"
-  echo "  - $LOCAL_BIN"
-  echo ""
-  echo "Please reinstall: npm install -g openmemo"
+  echo "Error: Binary not found at $BIN_PATH"
+  echo "Try reinstalling: npm install -g openmemo"
   exit 1
 fi
