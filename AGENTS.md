@@ -203,6 +203,56 @@ node dist/cli.js
 
 ---
 
+## Release & npm Publish
+
+### Release Process
+
+npm 배포는 **Git 태그 푸시**로 트리거됩니다. 커밋만 푸시해서는 npm에 게시되지 않습니다.
+
+```bash
+# 1. 버전 업데이트 (모든 패키지)
+#    - packages/openmemo/package.json
+#    - packages/openmemo-darwin-arm64/package.json
+#    - packages/openmemo-linux-x64/package.json
+#    - packages/openmemo-linux-arm64/package.json
+#    - packages/openmemo-windows-x64/package.json
+
+# 2. 커밋 & 푸시
+git add .
+git commit -m "chore: bump version to X.Y.Z for npm publish"
+git push
+
+# 3. 태그 생성 & 푸시 (이 단계가 npm publish를 트리거)
+git tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+### What Happens on Tag Push
+
+`.github/workflows/release.yml`이 실행됩니다:
+
+1. **Build**: 모든 플랫폼(darwin-arm64, linux-x64, linux-arm64, windows-x64)에서 바이너리 빌드
+2. **Publish**: 플랫폼별 패키지 + 메인 패키지를 npm에 게시
+3. **GitHub Release**: 바이너리를 첨부한 릴리스 생성
+
+### Version Check
+
+```bash
+# 현재 npm에 게시된 버전 확인
+npm view openmemo version
+
+# 로컬 버전 확인
+cat packages/openmemo/package.json | grep version
+```
+
+### Troubleshooting
+
+- **npm 버전이 안 바뀜**: 태그를 푸시했는지 확인 (`git push origin vX.Y.Z`)
+- **이미 존재하는 버전**: npm은 같은 버전을 다시 게시할 수 없음. 버전을 올려야 함
+- **CI 실패**: GitHub Actions 탭에서 로그 확인
+
+---
+
 ## Important Notes
 
 1. **No code merge without tests**: PRs must include related tests
