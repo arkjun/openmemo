@@ -32,8 +32,6 @@ importers:
 
   packages/openmemo-darwin-arm64: {}
 
-  packages/openmemo-darwin-x64: {}
-
   packages/openmemo-linux-arm64: {}
 
   packages/openmemo-linux-x64: {}
