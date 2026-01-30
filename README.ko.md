@@ -3,25 +3,21 @@
 mattn/memo에서 영감을 받은 OpenTUI 기반 메모 앱입니다.
 
 ## 주요 기능
-- 터미널 UI로 메모 목록을 탐색하고 열기.
-- new, list, edit, delete, grep, cat 명령 지원.
-- title, date, tags를 포함한 가벼운 프런트매터로 Markdown 저장.
-- 환경 변수로 에디터 지정.
-
-## 요구사항
-- `readline/promises`를 지원하는 Node.js (Node 17+).
+- 터미널 UI로 메모 목록을 탐색하고 열기
+- new, list, edit, delete, grep, cat 명령 지원
+- title, date, tags를 포함한 가벼운 프런트매터로 Markdown 저장
+- 환경 변수로 에디터 지정
 
 ## 설치
+
 ```bash
-npm install
-npm run build
+npm install -g openmemo
 ```
 
-CLI 노출:
+또는:
 ```bash
-npm link
-# 또는
-npm install -g .
+pnpm add -g openmemo
+yarn global add openmemo
 ```
 
 ## 사용 방법
@@ -37,12 +33,12 @@ openmemo new
 
 기타 명령:
 ```bash
-openmemo list
-openmemo edit <query>
-openmemo delete <query>
-openmemo grep <pattern>
-openmemo cat <query>
-openmemo help
+openmemo list           # 메모 목록
+openmemo edit <query>   # 메모 편집
+openmemo delete <query> # 메모 삭제
+openmemo grep <pattern> # 내용 검색
+openmemo cat <query>    # 메모 출력
+openmemo help           # 도움말
 ```
 
 참고:
@@ -77,20 +73,23 @@ YYYY-MM-DD-<slug>.md
 ```markdown
 ---
 title: Your Title
-date: 2026-01-29 12:34
+date: 2026-01-30 12:34
 tags: tag1, tag2
 ---
 
 # Your Title
 ```
 
-## 개발
-빌드:
-```bash
-npm run build
-```
+## 기여하기
 
-소스에서 실행:
 ```bash
-npm start
+git clone https://github.com/arkjun/openmemo
+cd openmemo
+pnpm install
+pnpm dev              # 소스에서 실행
+pnpm build            # TypeScript 빌드
+pnpm build:binaries   # 플랫폼 바이너리 빌드 (Bun 필요)
+pnpm test             # 테스트 (watch 모드)
+pnpm test:run         # 테스트 단일 실행
+pnpm test:coverage    # 커버리지 리포트
 ```

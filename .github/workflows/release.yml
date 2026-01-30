@@ -1,0 +1,144 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14
+            target: darwin-arm64
+          - os: macos-13
+            target: darwin-x64
+          - os: ubuntu-latest
+            target: linux-x64
+          - os: ubuntu-24.04-arm
+            target: linux-arm64
+          - os: windows-latest
+            target: windows-x64
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build binary
+        run: bun run scripts/build-binaries.ts --current
+
+      - name: Test binary (Unix)
+        if: runner.os != 'Windows'
+        run: ./packages/openmemo-${{ matrix.target }}/openmemo help
+
+      - name: Test binary (Windows)
+        if: runner.os == 'Windows'
+        run: ./packages/openmemo-${{ matrix.target }}/openmemo.exe help
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openmemo-${{ matrix.target }}
+          path: packages/openmemo-${{ matrix.target }}/openmemo*
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Copy binaries to packages
+        run: |
+          for target in darwin-arm64 darwin-x64 linux-x64 linux-arm64 windows-x64; do
+            mkdir -p packages/openmemo-$target
+            cp artifacts/openmemo-$target/* packages/openmemo-$target/
+            chmod +x packages/openmemo-$target/openmemo* 2>/dev/null || true
+          done
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Update package versions
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+
+          # Update main package
+          cd packages/openmemo
+          npm version $VERSION --no-git-tag-version --allow-same-version
+
+          # Update optional dependencies versions
+          node -e "
+            const pkg = require('./package.json');
+            for (const dep of Object.keys(pkg.optionalDependencies || {})) {
+              pkg.optionalDependencies[dep] = '$VERSION';
+            }
+            require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+          cd ../..
+
+          # Update platform packages
+          for target in darwin-arm64 darwin-x64 linux-x64 linux-arm64 windows-x64; do
+            cd packages/openmemo-$target
+            npm version $VERSION --no-git-tag-version --allow-same-version
+            cd ../..
+          done
+
+      - name: Publish platform packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          for target in darwin-arm64 darwin-x64 linux-x64 linux-arm64 windows-x64; do
+            echo "Publishing openmemo-$target..."
+            cd packages/openmemo-$target
+            npm publish --access public || true
+            cd ../..
+          done
+
+      - name: Publish main package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          cd packages/openmemo
+          npm publish --access public
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/openmemo-darwin-arm64/*
+            artifacts/openmemo-darwin-x64/*
+            artifacts/openmemo-linux-x64/*
+            artifacts/openmemo-linux-arm64/*
+            artifacts/openmemo-windows-x64/*
+          generate_release_notes: true

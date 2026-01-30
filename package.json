@@ -1,14 +1,9 @@
 {
-  "name": "openmemo",
+  "name": "openmemo-dev",
   "version": "0.1.0",
-  "description": "OpenTUI-based memo app inspired by mattn/memo",
+  "private": true,
+  "description": "OpenTUI-based memo app inspired by mattn/memo (development root)",
   "type": "module",
-  "bin": {
-    "openmemo": "dist/cli.js"
-  },
-  "files": [
-    "dist"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arkjun/openmemo.git"
@@ -32,17 +27,19 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "build:binaries": "bun run scripts/build-binaries.ts",
+    "dev": "bun src/cli.ts",
     "start": "bun dist/cli.js",
     "test": "vitest",
     "test:run": "vitest run",
     "test:watch": "vitest watch",
-    "test:coverage": "vitest run --coverage",
-    "prepublishOnly": "npm run build && npm run test:run"
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@opentui/core": "^0.1.75"
   },
   "devDependencies": {
+    "@types/bun": "latest",
     "@types/node": "^20.11.30",
     "@vitest/coverage-v8": "^4.0.18",
     "typescript": "^5.4.5",

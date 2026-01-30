@@ -3,25 +3,21 @@
 mattn/memo に着想を得た OpenTUI ベースのメモアプリです。
 
 ## 特長
-- ターミナル UI でメモを閲覧・開く。
-- new / list / edit / delete / grep / cat コマンドに対応。
-- title, date, tags を含む軽量なフロントマター付き Markdown 保存。
-- 環境変数でエディタを指定可能。
-
-## 要件
-- `readline/promises` をサポートする Node.js（Node 17+）。
+- ターミナル UI でメモを閲覧・開く
+- new / list / edit / delete / grep / cat コマンドに対応
+- title, date, tags を含む軽量なフロントマター付き Markdown 保存
+- 環境変数でエディタを指定可能
 
 ## インストール
+
 ```bash
-npm install
-npm run build
+npm install -g openmemo
 ```
 
-CLI を有効化:
+または:
 ```bash
-npm link
-# または
-npm install -g .
+pnpm add -g openmemo
+yarn global add openmemo
 ```
 
 ## 使い方
@@ -37,12 +33,12 @@ openmemo new
 
 その他のコマンド:
 ```bash
-openmemo list
-openmemo edit <query>
-openmemo delete <query>
-openmemo grep <pattern>
-openmemo cat <query>
-openmemo help
+openmemo list           # メモ一覧
+openmemo edit <query>   # メモ編集
+openmemo delete <query> # メモ削除
+openmemo grep <pattern> # 内容検索
+openmemo cat <query>    # メモ表示
+openmemo help           # ヘルプ
 ```
 
 メモ:
@@ -52,9 +48,9 @@ openmemo help
 
 ## 設定
 環境変数:
-- `OPEN_MEMO_DIR`: メモ保存ディレクトリを指定。
-- `OPEN_MEMO_EDITOR`: 使用するエディタのコマンド。
-- `VISUAL` / `EDITOR`: `OPEN_MEMO_EDITOR` が未設定の場合のフォールバック。
+- `OPEN_MEMO_DIR`: メモ保存ディレクトリを指定
+- `OPEN_MEMO_EDITOR`: 使用するエディタのコマンド
+- `VISUAL` / `EDITOR`: `OPEN_MEMO_EDITOR` が未設定の場合のフォールバック
 
 エディタ優先順位:
 1. `OPEN_MEMO_EDITOR`
@@ -77,20 +73,23 @@ YYYY-MM-DD-<slug>.md
 ```markdown
 ---
 title: Your Title
-date: 2026-01-29 12:34
+date: 2026-01-30 12:34
 tags: tag1, tag2
 ---
 
 # Your Title
 ```
 
-## 開発
-ビルド:
-```bash
-npm run build
-```
+## コントリビュート
 
-ソースから実行:
 ```bash
-npm start
+git clone https://github.com/arkjun/openmemo
+cd openmemo
+pnpm install
+pnpm dev              # ソースから実行
+pnpm build            # TypeScriptビルド
+pnpm build:binaries   # プラットフォームバイナリビルド（Bun必要）
+pnpm test             # テスト（watchモード）
+pnpm test:run         # テスト単発実行
+pnpm test:coverage    # カバレッジレポート
 ```

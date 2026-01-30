@@ -1,0 +1,14 @@
+{
+  "name": "openmemo-windows-x64",
+  "version": "0.1.0",
+  "description": "openmemo binary for Windows x64",
+  "os": ["win32"],
+  "cpu": ["x64"],
+  "files": ["openmemo.exe"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arkjun/openmemo.git"
+  },
+  "author": "arkjun",
+  "license": "MIT"
+}

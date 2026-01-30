@@ -14,19 +14,16 @@ OpenTUI-based memo app inspired by mattn/memo.
 - Markdown storage with lightweight frontmatter (title, date, tags)
 - Uses your preferred editor via environment variables
 
-### Requirements
-- Node.js 17+ or Bun
-- pnpm
+### Installation
 
-### Install
 ```bash
-pnpm install
-pnpm build
+npm install -g openmemo
 ```
 
-Expose the CLI:
+Or with other package managers:
 ```bash
-pnpm link --global
+pnpm add -g openmemo
+yarn global add openmemo
 ```
 
 ### Usage
@@ -89,13 +86,18 @@ tags: tag1, tag2
 # Your Title
 ```
 
-### Development
+### Contributing
+
 ```bash
-pnpm build         # Build
-pnpm start         # Run from dist
-pnpm test          # Run tests (watch mode)
-pnpm test:run      # Run tests once
-pnpm test:coverage # Coverage report
+git clone https://github.com/arkjun/openmemo
+cd openmemo
+pnpm install
+pnpm dev              # Run from source
+pnpm build            # Build TypeScript
+pnpm build:binaries   # Build platform binaries (requires Bun)
+pnpm test             # Run tests (watch mode)
+pnpm test:run         # Run tests once
+pnpm test:coverage    # Coverage report
 ```
 
 ---
@@ -110,19 +112,16 @@ mattn/memo에서 영감을 받은 OpenTUI 기반 터미널 메모 앱입니다.
 - 마크다운 저장 (title, date, tags frontmatter 포함)
 - 환경 변수를 통한 선호 에디터 설정
 
-### 요구사항
-- Node.js 17+ 또는 Bun
-- pnpm
-
 ### 설치
+
 ```bash
-pnpm install
-pnpm build
+npm install -g openmemo
 ```
 
-CLI 전역 등록:
+또는:
 ```bash
-pnpm link --global
+pnpm add -g openmemo
+yarn global add openmemo
 ```
 
 ### 사용법
@@ -185,13 +184,18 @@ tags: 태그1, 태그2
 # 제목
 ```
 
-### 개발
+### 기여하기
+
 ```bash
-pnpm build         # 빌드
-pnpm start         # dist에서 실행
-pnpm test          # 테스트 (watch 모드)
-pnpm test:run      # 테스트 단일 실행
-pnpm test:coverage # 커버리지 리포트
+git clone https://github.com/arkjun/openmemo
+cd openmemo
+pnpm install
+pnpm dev              # 소스에서 실행
+pnpm build            # TypeScript 빌드
+pnpm build:binaries   # 플랫폼 바이너리 빌드 (Bun 필요)
+pnpm test             # 테스트 (watch 모드)
+pnpm test:run         # 테스트 단일 실행
+pnpm test:coverage    # 커버리지 리포트
 ```
 
 ---
@@ -206,19 +210,16 @@ mattn/memoにインスパイアされたOpenTUIベースのターミナルメモ
 - マークダウン保存（title, date, tags frontmatter付き）
 - 環境変数でお好みのエディターを設定
 
-### 必要条件
-- Node.js 17+ または Bun
-- pnpm
-
 ### インストール
+
 ```bash
-pnpm install
-pnpm build
+npm install -g openmemo
 ```
 
-CLIをグローバル登録:
+または:
 ```bash
-pnpm link --global
+pnpm add -g openmemo
+yarn global add openmemo
 ```
 
 ### 使い方
@@ -281,11 +282,16 @@ tags: タグ1, タグ2
 # タイトル
 ```
 
-### 開発
+### コントリビュート
+
 ```bash
-pnpm build         # ビルド
-pnpm start         # distから実行
-pnpm test          # テスト（watchモード）
-pnpm test:run      # テスト単発実行
-pnpm test:coverage # カバレッジレポート
+git clone https://github.com/arkjun/openmemo
+cd openmemo
+pnpm install
+pnpm dev              # ソースから実行
+pnpm build            # TypeScriptビルド
+pnpm build:binaries   # プラットフォームバイナリビルド（Bun必要）
+pnpm test             # テスト（watchモード）
+pnpm test:run         # テスト単発実行
+pnpm test:coverage    # カバレッジレポート
 ```

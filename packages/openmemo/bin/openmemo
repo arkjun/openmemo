@@ -1,0 +1,55 @@
+#!/bin/sh
+set -e
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PKG_DIR="$(dirname "$SCRIPT_DIR")"
+
+# Detect platform
+OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+ARCH="$(uname -m)"
+
+case "$OS" in
+  darwin) OS="darwin" ;;
+  linux) OS="linux" ;;
+  mingw*|msys*|cygwin*) OS="windows" ;;
+esac
+
+case "$ARCH" in
+  x86_64|amd64) ARCH="x64" ;;
+  arm64|aarch64) ARCH="arm64" ;;
+esac
+
+PLATFORM="${OS}-${ARCH}"
+BIN_PKG="openmemo-${PLATFORM}"
+
+# Try to find the binary in node_modules (global install structure)
+# Path 1: Global install - binary package is a sibling in node_modules
+GLOBAL_BIN="$PKG_DIR/../$BIN_PKG/openmemo"
+
+# Path 2: Local install - binary package is in package's node_modules
+LOCAL_BIN="$PKG_DIR/node_modules/$BIN_PKG/openmemo"
+
+# Windows executable paths
+GLOBAL_BIN_EXE="$PKG_DIR/../$BIN_PKG/openmemo.exe"
+LOCAL_BIN_EXE="$PKG_DIR/node_modules/$BIN_PKG/openmemo.exe"
+
+# Try each path
+if [ -x "$GLOBAL_BIN" ]; then
+  exec "$GLOBAL_BIN" "$@"
+elif [ -x "$LOCAL_BIN" ]; then
+  exec "$LOCAL_BIN" "$@"
+elif [ -x "$GLOBAL_BIN_EXE" ]; then
+  exec "$GLOBAL_BIN_EXE" "$@"
+elif [ -x "$LOCAL_BIN_EXE" ]; then
+  exec "$LOCAL_BIN_EXE" "$@"
+else
+  echo "Error: Could not find openmemo binary for platform $PLATFORM"
+  echo ""
+  echo "Searched paths:"
+  echo "  - $GLOBAL_BIN"
+  echo "  - $LOCAL_BIN"
+  echo ""
+  echo "Please reinstall: npm install -g openmemo"
+  exit 1
+fi

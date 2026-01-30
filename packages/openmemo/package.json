@@ -1,0 +1,43 @@
+{
+  "name": "openmemo",
+  "version": "0.1.0",
+  "description": "OpenTUI-based memo app inspired by mattn/memo",
+  "bin": {
+    "openmemo": "bin/openmemo"
+  },
+  "files": [
+    "bin",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arkjun/openmemo.git"
+  },
+  "author": "arkjun",
+  "license": "MIT",
+  "keywords": [
+    "memo",
+    "cli",
+    "terminal",
+    "tui",
+    "note",
+    "markdown"
+  ],
+  "homepage": "https://github.com/arkjun/openmemo#readme",
+  "bugs": {
+    "url": "https://github.com/arkjun/openmemo/issues"
+  },
+  "scripts": {
+    "postinstall": "node bin/postinstall.mjs"
+  },
+  "optionalDependencies": {
+    "openmemo-darwin-arm64": "0.1.0",
+    "openmemo-darwin-x64": "0.1.0",
+    "openmemo-linux-x64": "0.1.0",
+    "openmemo-linux-arm64": "0.1.0",
+    "openmemo-windows-x64": "0.1.0"
+  }
+}
