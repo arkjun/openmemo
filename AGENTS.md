@@ -1,50 +1,50 @@
-# AGENTS.md - openmemo 프로젝트 가이드라인
+# AGENTS.md - openmemo Project Guidelines
 
-## 프로젝트 개요
+## Project Overview
 
-**openmemo**는 mattn/memo에서 영감을 받은 OpenTUI 기반 터미널 메모 애플리케이션입니다.
+**openmemo** is an OpenTUI-based terminal memo application inspired by mattn/memo.
 
-### 기술 스택
+### Tech Stack
 - **Language**: TypeScript (ES2022, ESNext modules)
 - **Runtime**: Bun / Node.js
 - **TUI**: @opentui/core
 - **Test**: Vitest
 - **Package Manager**: pnpm
 
-### 프로젝트 구조
+### Project Structure
 ```
 openmemo/
 ├── src/
-│   ├── cli.ts      # CLI 진입점 및 명령어 핸들러
-│   ├── tui.ts      # 터미널 UI 구현
-│   ├── storage.ts  # 파일 스토리지 레이어
-│   ├── config.ts   # 설정 관리
-│   ├── editor.ts   # 외부 에디터 통합
-│   └── utils.ts    # 유틸리티 함수
+│   ├── cli.ts      # CLI entry point and command handlers
+│   ├── tui.ts      # Terminal UI implementation
+│   ├── storage.ts  # File storage layer
+│   ├── config.ts   # Configuration management
+│   ├── editor.ts   # External editor integration
+│   └── utils.ts    # Utility functions
 ├── tests/
-│   ├── unit/       # 단위 테스트
-│   ├── integration/# 통합 테스트
-│   ├── fixtures/   # 테스트 데이터
-│   └── setup.ts    # 테스트 설정
-└── dist/           # 빌드 출력
+│   ├── unit/       # Unit tests
+│   ├── integration/# Integration tests
+│   ├── fixtures/   # Test data
+│   └── setup.ts    # Test setup
+└── dist/           # Build output
 ```
 
 ---
 
-## 개발 규칙
+## Development Rules
 
-### TDD (Test-Driven Development) 필수
+### TDD (Test-Driven Development) Required
 
-**모든 새로운 기능과 버그 수정은 TDD 방식으로 개발합니다.**
+**All new features and bug fixes must be developed using TDD.**
 
-#### TDD 사이클
-1. **Red**: 실패하는 테스트를 먼저 작성
-2. **Green**: 테스트를 통과하는 최소한의 코드 작성
-3. **Refactor**: 코드 개선 (테스트는 계속 통과해야 함)
+#### TDD Cycle
+1. **Red**: Write a failing test first
+2. **Green**: Write minimal code to pass the test
+3. **Refactor**: Improve the code (tests must continue to pass)
 
-#### 테스트 작성 순서
+#### Test Writing Order
 ```typescript
-// 1. 먼저 테스트 파일에 테스트 케이스 작성
+// 1. First write test cases in the test file
 describe('newFeature', () => {
   it('should do X when Y', () => {
     const result = newFeature(input)
@@ -52,40 +52,40 @@ describe('newFeature', () => {
   })
 })
 
-// 2. 테스트 실행하여 실패 확인
+// 2. Run tests to confirm failure
 // pnpm test:run
 
-// 3. 기능 구현
+// 3. Implement the feature
 
-// 4. 테스트 통과 확인
+// 4. Confirm tests pass
 
-// 5. 리팩토링 (필요시)
+// 5. Refactor (if needed)
 ```
 
-#### 테스트 커버리지 목표
-- 새로운 코드: 최소 80% 커버리지
-- Pure functions: 100% 커버리지 권장
+#### Test Coverage Goals
+- New code: Minimum 80% coverage
+- Pure functions: 100% coverage recommended
 
 ---
 
-## 테스트 가이드
+## Testing Guide
 
-### 명령어
+### Commands
 ```bash
-pnpm test         # Watch 모드로 테스트 실행
-pnpm test:run     # 단일 실행
-pnpm test:watch   # Watch 모드
-pnpm test:coverage # 커버리지 리포트
+pnpm test         # Run tests in watch mode
+pnpm test:run     # Single run
+pnpm test:watch   # Watch mode
+pnpm test:coverage # Coverage report
 ```
 
-### 테스트 파일 네이밍
-- 단위 테스트: `*.test.ts`
-- 통합 테스트: `*.integration.test.ts`
-- E2E 테스트: `*.e2e.test.ts`
+### Test File Naming
+- Unit tests: `*.test.ts`
+- Integration tests: `*.integration.test.ts`
+- E2E tests: `*.e2e.test.ts`
 
-### 테스트 패턴
+### Test Patterns
 
-#### Pure Function 테스트
+#### Pure Function Tests
 ```typescript
 describe('functionName', () => {
   it('should [expected behavior] when [condition]', () => {
@@ -94,7 +94,7 @@ describe('functionName', () => {
 })
 ```
 
-#### 환경 변수 테스트
+#### Environment Variable Tests
 ```typescript
 describe('configFunction', () => {
   const originalEnv = { ...process.env }
@@ -116,7 +116,7 @@ describe('configFunction', () => {
 })
 ```
 
-#### 파일시스템 테스트 (Integration)
+#### File System Tests (Integration)
 ```typescript
 describe('Storage Integration', () => {
   let testDir: string
@@ -136,27 +136,27 @@ describe('Storage Integration', () => {
 
 ---
 
-## 코드 스타일
+## Code Style
 
-### TypeScript 규칙
-- `strict: true` 모드 사용
-- 명시적 타입 선언 권장
-- `any` 타입 사용 지양
+### TypeScript Rules
+- Use `strict: true` mode
+- Explicit type declarations recommended
+- Avoid using `any` type
 
-### 네이밍 컨벤션
-- 함수: `camelCase` (예: `getMemoDir`, `formatDate`)
-- 타입/인터페이스: `PascalCase` (예: `MemoRecord`)
-- 상수: `SCREAMING_SNAKE_CASE` (예: `DEFAULT_EDITOR`)
-- 파일: `kebab-case.ts` 또는 `camelCase.ts`
+### Naming Conventions
+- Functions: `camelCase` (e.g., `getMemoDir`, `formatDate`)
+- Types/Interfaces: `PascalCase` (e.g., `MemoRecord`)
+- Constants: `SCREAMING_SNAKE_CASE` (e.g., `DEFAULT_EDITOR`)
+- Files: `kebab-case.ts` or `camelCase.ts`
 
-### 함수 설계 원칙
-- **Single Responsibility**: 하나의 함수는 하나의 역할만
-- **Pure Functions 선호**: 부작용 최소화, 테스트 용이성 확보
-- **의존성 주입**: 테스트 가능한 구조 설계
+### Function Design Principles
+- **Single Responsibility**: Each function should have only one purpose
+- **Prefer Pure Functions**: Minimize side effects, ensure testability
+- **Dependency Injection**: Design for testable structures
 
 ---
 
-## 커밋 규칙
+## Commit Rules
 
 ### Conventional Commits
 ```
@@ -167,15 +167,15 @@ describe('Storage Integration', () => {
 <footer>
 ```
 
-### 타입
-- `feat`: 새로운 기능
-- `fix`: 버그 수정
-- `test`: 테스트 추가/수정
-- `refactor`: 리팩토링
-- `docs`: 문서 수정
-- `chore`: 빌드, 설정 등
+### Types
+- `feat`: New feature
+- `fix`: Bug fix
+- `test`: Add/modify tests
+- `refactor`: Refactoring
+- `docs`: Documentation changes
+- `chore`: Build, configuration, etc.
 
-### 예시
+### Example
 ```
 feat(storage): add memo search by tag
 
@@ -187,25 +187,25 @@ Closes #123
 
 ---
 
-## 빌드 및 실행
+## Build & Run
 
 ```bash
-# 빌드
+# Build
 pnpm build
 
-# 로컬 실행
+# Local run
 pnpm start
 
-# 또는 직접 실행
+# Or run directly
 bun dist/cli.js
 node dist/cli.js
 ```
 
 ---
 
-## 주의사항
+## Important Notes
 
-1. **테스트 없이 코드 머지 금지**: PR에는 반드시 관련 테스트 포함
-2. **TUI 코드 (tui.ts)**: 단위 테스트 제외 대상, 수동 테스트로 검증
-3. **환경 변수**: 테스트 후 반드시 원복
-4. **비동기 코드**: 항상 `async/await` 사용
+1. **No code merge without tests**: PRs must include related tests
+2. **TUI code (tui.ts)**: Excluded from unit tests, verify with manual testing
+3. **Environment variables**: Must be restored after tests
+4. **Async code**: Always use `async/await`
