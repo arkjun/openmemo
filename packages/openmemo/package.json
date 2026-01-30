@@ -1,6 +1,6 @@
 {
   "name": "openmemo",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "OpenTUI-based memo app inspired by mattn/memo",
   "bin": {
     "openmemo": "bin/openmemo"
