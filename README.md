@@ -6,7 +6,7 @@
 
 ## English
 
-OpenTUI-based memo app inspired by mattn/memo.
+OpenTUI-based memo app inspired by [mattn/memo](https://github.com/mattn/memo).
 
 ### Features
 - Terminal UI for browsing and opening memos
@@ -104,7 +104,7 @@ pnpm test:coverage    # Coverage report
 
 ## 한국어
 
-mattn/memo에서 영감을 받은 OpenTUI 기반 터미널 메모 앱입니다.
+[mattn/memo](https://github.com/mattn/memo)에서 영감을 받은 OpenTUI 기반 터미널 메모 앱입니다.
 
 ### 기능
 - 메모 탐색 및 열기를 위한 터미널 UI
@@ -202,7 +202,7 @@ pnpm test:coverage    # 커버리지 리포트
 
 ## 日本語
 
-mattn/memoにインスパイアされたOpenTUIベースのターミナルメモアプリです。
+[mattn/memo](https://github.com/mattn/memo)にインスパイアされたOpenTUIベースのターミナルメモアプリです。
 
 ### 機能
 - メモの閲覧・開くためのターミナルUI
