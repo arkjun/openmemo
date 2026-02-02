@@ -1,5 +1,5 @@
 import { $ } from "bun";
-import { mkdir, unlink } from "fs/promises";
+import { mkdir } from "fs/promises";
 import { join, basename } from "path";
 
 const allTargets = [
@@ -80,14 +80,18 @@ for (const { target, pkg, ext } of buildTargets) {
 
     if (isWindows) {
       const zipFile = join(outDir, `openmemo-${shortTarget}.zip`);
-      await $`zip -j ${zipFile} ${outFile}`.quiet();
+      if (process.platform === "win32") {
+        // Windows host - use PowerShell
+        await $`powershell -Command "Compress-Archive -Path '${outFile}' -DestinationPath '${zipFile}' -Force"`.quiet();
+      } else {
+        // Unix host cross-compiling for Windows
+        await $`zip -j ${zipFile} ${outFile}`.quiet();
+      }
       console.log(`  ✓ Compressed: ${zipFile}`);
-      await unlink(outFile);
     } else {
       const tarFile = join(outDir, `openmemo-${shortTarget}.tar.gz`);
       await $`tar -czf ${tarFile} -C ${outDir} ${binaryFileName}`.quiet();
       console.log(`  ✓ Compressed: ${tarFile}`);
-      await unlink(outFile);
     }
 
     console.log();
