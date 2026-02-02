@@ -1,5 +1,8 @@
 # openmemo
 
+[![npm version](https://img.shields.io/npm/v/openmemo)](https://www.npmjs.com/package/openmemo)
+[![CI](https://github.com/arkjun/openmemo/actions/workflows/ci.yml/badge.svg)](https://github.com/arkjun/openmemo/actions/workflows/ci.yml)
+
 [English](README.md) | [한국어](README.ko.md)
 
 mattn/memo に着想を得た OpenTUI ベースのメモアプリです。
