@@ -1,6 +1,6 @@
 import { $ } from "bun";
-import { mkdir } from "fs/promises";
-import { join } from "path";
+import { mkdir, unlink } from "fs/promises";
+import { join, basename } from "path";
 
 const allTargets = [
   { target: "bun-darwin-arm64", pkg: "openmemo-darwin-arm64", ext: "" },
@@ -72,7 +72,25 @@ for (const { target, pkg, ext } of buildTargets) {
 
   try {
     await $`bun build --compile --target=${target} ./src/cli.ts --outfile ${outFile}`.quiet();
-    console.log(`  ✓ Built: ${outFile}\n`);
+    console.log(`  ✓ Built: ${outFile}`);
+
+    // Compress the binary
+    const isWindows = target.includes("windows");
+    const binaryFileName = basename(outFile);
+
+    if (isWindows) {
+      const zipFile = join(outDir, `openmemo-${shortTarget}.zip`);
+      await $`zip -j ${zipFile} ${outFile}`.quiet();
+      console.log(`  ✓ Compressed: ${zipFile}`);
+      await unlink(outFile);
+    } else {
+      const tarFile = join(outDir, `openmemo-${shortTarget}.tar.gz`);
+      await $`tar -czf ${tarFile} -C ${outDir} ${binaryFileName}`.quiet();
+      console.log(`  ✓ Compressed: ${tarFile}`);
+      await unlink(outFile);
+    }
+
+    console.log();
     successCount++;
   } catch (error) {
     console.error(`  ✗ Failed to build ${target}`);
