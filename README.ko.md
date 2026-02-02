@@ -1,5 +1,7 @@
 # openmemo
 
+[English](README.md) | [日本語](README.ja.md)
+
 mattn/memo에서 영감을 받은 OpenTUI 기반 메모 앱입니다.
 
 ## 주요 기능
