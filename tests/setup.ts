@@ -1,10 +1,10 @@
-import { beforeEach, afterEach, vi } from 'vitest'
+import { afterEach, beforeEach, vi } from 'vitest';
 
 // Reset modules and mocks between tests
 beforeEach(() => {
-  vi.resetModules()
-})
+  vi.resetModules();
+});
 
 afterEach(() => {
-  vi.restoreAllMocks()
-})
+  vi.restoreAllMocks();
+});

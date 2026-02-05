@@ -33,12 +33,15 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:watch": "vitest watch",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write ."
   },
   "dependencies": {
     "@opentui/core": "^0.1.75"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.14",
     "@types/bun": "latest",
     "@types/node": "^20.11.30",
     "@vitest/coverage-v8": "^4.0.18",
