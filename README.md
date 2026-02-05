@@ -7,7 +7,7 @@
 
 OpenTUI-based memo app inspired by [mattn/memo](https://github.com/mattn/memo).
 
-<img width="1232" height="1129" alt="Openmemo Demo Image" src="https://github.com/user-attachments/assets/1bf47b65-d578-4984-9e07-04e329892887" />
+<img width="1232" height="1129" alt="Openmemo Demo Image" src="example/demo-screen-shot.png" />
 
 ### Features
 - Terminal UI for browsing and opening memos
