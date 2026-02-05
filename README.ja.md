@@ -9,6 +9,7 @@ mattn/memo に着想を得た OpenTUI ベースのメモアプリです。
 
 ## 特長
 - ターミナル UI でメモを閲覧・開く
+- シンタックスハイライト付き Markdown プレビュー（見出し、コードブロック、太字、斜体、リンク）
 - new / list / edit / delete / grep / cat コマンドに対応
 - title, date, tags を含む軽量なフロントマター付き Markdown 保存
 - 環境変数でエディタを指定可能

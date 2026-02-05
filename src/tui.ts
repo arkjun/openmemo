@@ -1,18 +1,55 @@
 import {
   BoxRenderable,
   createCliRenderer,
+  MarkdownRenderable,
+  RGBA,
   SelectRenderable,
   SelectRenderableEvents,
-  TextRenderable,
+  SyntaxStyle,
   type SelectOption,
   type KeyEvent,
 } from "@opentui/core"
 import process from "node:process"
 import { openEditor } from "./editor.js"
 import { listMemos, type MemoRecord } from "./storage.js"
-import { truncateLines } from "./utils.js"
 
 const EMPTY_MESSAGE = "No memos yet. Run openmemo new to create one."
+
+const markdownStyle = SyntaxStyle.fromStyles({
+  "default":              { fg: RGBA.fromHex("#cbd5e1") },
+
+  // Headings — per-level colors
+  "markup.heading":       { fg: RGBA.fromHex("#f97316"), bold: true },
+  "markup.heading.1":     { fg: RGBA.fromHex("#f97316"), bold: true },
+  "markup.heading.2":     { fg: RGBA.fromHex("#38bdf8"), bold: true },
+  "markup.heading.3":     { fg: RGBA.fromHex("#a78bfa"), bold: true },
+  "markup.heading.4":     { fg: RGBA.fromHex("#4ade80"), bold: true },
+  "markup.heading.5":     { fg: RGBA.fromHex("#fbbf24"), bold: true },
+  "markup.heading.6":     { fg: RGBA.fromHex("#f472b6"), bold: true },
+
+  // Inline
+  "markup.strong":        { bold: true },
+  "markup.italic":        { italic: true },
+  "markup.strikethrough": { dim: true },
+  "markup.raw":           { fg: RGBA.fromHex("#fbbf24") },
+  "markup.link":          { fg: RGBA.fromHex("#38bdf8"), underline: true },
+  "markup.link.url":      { fg: RGBA.fromHex("#64748b") },
+  "markup.list":          { fg: RGBA.fromHex("#f97316") },
+  "punctuation.special":  { fg: RGBA.fromHex("#64748b") },
+
+  // Code block syntax highlighting (Monokai-inspired)
+  "keyword":              { fg: RGBA.fromHex("#f97316") },
+  "string":               { fg: RGBA.fromHex("#a6e22e") },
+  "comment":              { fg: RGBA.fromHex("#75715e"), italic: true },
+  "function":             { fg: RGBA.fromHex("#66d9ef") },
+  "variable":             { fg: RGBA.fromHex("#e2e8f0") },
+  "type":                 { fg: RGBA.fromHex("#a78bfa") },
+  "number":               { fg: RGBA.fromHex("#ae81ff") },
+  "operator":             { fg: RGBA.fromHex("#f92672") },
+  "constant":             { fg: RGBA.fromHex("#ae81ff") },
+  "property":             { fg: RGBA.fromHex("#66d9ef") },
+  "punctuation":          { fg: RGBA.fromHex("#cbd5e1") },
+})
 
 export async function runTui(): Promise<void> {
   const memos = await listMemos()
@@ -60,17 +97,18 @@ export async function runTui(): Promise<void> {
   container.add(listBox)
   container.add(previewBox)
 
-  const previewText = new TextRenderable(renderer, {
+  const previewMarkdown = new MarkdownRenderable(renderer, {
     id: "openmemo-preview-text",
     width: "100%",
     height: "100%",
-    fg: "#e2e8f0",
     content: "",
+    syntaxStyle: markdownStyle,
+    conceal: true,
   })
-  previewBox.add(previewText)
+  previewBox.add(previewMarkdown)
 
   if (memos.length === 0) {
-    previewText.content = EMPTY_MESSAGE
+    previewMarkdown.content = EMPTY_MESSAGE
     renderer.start()
     return
   }
@@ -103,12 +141,10 @@ export async function runTui(): Promise<void> {
 
   const updatePreview = (memo: MemoRecord | null) => {
     if (!memo) {
-      previewText.content = EMPTY_MESSAGE
+      previewMarkdown.content = EMPTY_MESSAGE
       return
     }
-    const header = `${memo.title}\n${memo.id}\n`
-    const body = truncateLines(stripFrontmatter(memo.content), 24)
-    previewText.content = `${header}\n${body}`
+    previewMarkdown.content = stripFrontmatter(memo.content)
   }
 
   updatePreview(memos[0])

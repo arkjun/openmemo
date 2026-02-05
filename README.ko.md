@@ -9,6 +9,7 @@ mattn/memo에서 영감을 받은 OpenTUI 기반 메모 앱입니다.
 
 ## 주요 기능
 - 터미널 UI로 메모 목록을 탐색하고 열기
+- 구문 강조가 적용된 Markdown 미리보기 (헤딩, 코드 블록, 볼드, 이탤릭, 링크)
 - new, list, edit, delete, grep, cat 명령 지원
 - title, date, tags를 포함한 가벼운 프런트매터로 Markdown 저장
 - 환경 변수로 에디터 지정

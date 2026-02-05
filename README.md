@@ -9,6 +9,7 @@ OpenTUI-based memo app inspired by [mattn/memo](https://github.com/mattn/memo).
 
 ### Features
 - Terminal UI for browsing and opening memos
+- Markdown preview with syntax highlighting (headings, code blocks, bold, italic, links)
 - Create, list, edit, delete, grep, and cat commands
 - Markdown storage with lightweight frontmatter (title, date, tags)
 - Uses your preferred editor via environment variables
