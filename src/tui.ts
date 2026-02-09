@@ -5,6 +5,7 @@ import {
   type KeyEvent,
   MarkdownRenderable,
   RGBA,
+  ScrollBoxRenderable,
   type SelectOption,
   SelectRenderable,
   SelectRenderableEvents,
@@ -72,6 +73,7 @@ export async function runTui(): Promise<void> {
   const listBox = new BoxRenderable(renderer, {
     id: 'openmemo-list',
     flexGrow: 1,
+    flexBasis: 0,
     marginRight: 1,
     border: true,
     borderStyle: 'single',
@@ -85,6 +87,8 @@ export async function runTui(): Promise<void> {
   const previewBox = new BoxRenderable(renderer, {
     id: 'openmemo-preview',
     flexGrow: 2,
+    flexBasis: 0,
+    overflow: 'hidden',
     border: true,
     borderStyle: 'single',
     borderColor: '#334155',
@@ -94,18 +98,26 @@ export async function runTui(): Promise<void> {
     shouldFill: true,
   });
 
+  const previewScroll = new ScrollBoxRenderable(renderer, {
+    id: 'openmemo-preview-scroll',
+    width: '100%',
+    height: '100%',
+    scrollY: true,
+    scrollX: false,
+  });
+
   container.add(listBox);
   container.add(previewBox);
+  previewBox.add(previewScroll);
 
   const previewMarkdown = new MarkdownRenderable(renderer, {
     id: 'openmemo-preview-text',
     width: '100%',
-    height: '100%',
     content: '',
     syntaxStyle: markdownStyle,
     conceal: true,
   });
-  previewBox.add(previewMarkdown);
+  previewScroll.add(previewMarkdown);
 
   if (memos.length === 0) {
     previewMarkdown.content = EMPTY_MESSAGE;
@@ -145,6 +157,7 @@ export async function runTui(): Promise<void> {
       return;
     }
     previewMarkdown.content = stripFrontmatter(memo.content);
+    previewScroll.scrollTo(0);
   };
 
   updatePreview(memos[0]);
@@ -163,6 +176,16 @@ export async function runTui(): Promise<void> {
   renderer.keyInput.on('keypress', (key: KeyEvent) => {
     if (key.name === 'q' || key.name === 'escape') {
       renderer.destroy();
+    } else if (key.name === 'j') {
+      previewScroll.scrollBy(1);
+    } else if (key.name === 'k') {
+      previewScroll.scrollBy(-1);
+    } else if (key.name === 'd') {
+      const halfPage = Math.floor(previewScroll.viewport.height / 2);
+      previewScroll.scrollBy(halfPage);
+    } else if (key.name === 'u') {
+      const halfPage = Math.floor(previewScroll.viewport.height / 2);
+      previewScroll.scrollBy(-halfPage);
     }
   });
 
